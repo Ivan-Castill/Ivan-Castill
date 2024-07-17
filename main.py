@@ -8,109 +8,140 @@
 
 # 1.-menu
 # MAXIMO 4 CLIENTES
-cliente_nombres=[]
-cliente_apellido=[]
-cliente_telefono=[]
-
-plicrush_nombre=[]
-plicrush_dependencia=[]
-plicrush_telefono=[]
-
-codigo=[]
-pago_final=[]
-
-
+# Máximo 4 clientes
+clientes = []
+plicrushes = []
+pedidos = []
 
 def menu():
-    print("\n ¿Que accion desea realizar?")
-    print(" +  1) Registrar pedidos")
-    print(" +  2) Mostrar pedidos")
-    print(" +  3) Mostrar detalles de un pedido")
-    print(" +  4) Salir del sistema")
-    opcion=input(" Ingrese la opcion: ")
+    print("\n¿Qué acción desea realizar?")
+    print("1) Registrar pedidos")
+    print("2) Mostrar pedidos")
+    print("3) Mostrar detalles de un pedido")
+    print("4) Salir del sistema")
+    opcion = input("Ingrese la opción: ")
     return int(opcion)
-def opcion1():
-    print("------------NUEVO PEDIDO-----")
-    print("         Ingrese los datos del cliente  ")
-    nombre_cliente=input(" Nombre: ")
-    apellido_cliente=input(" Apellido: ")
-    telefono_cliente=input(" Telefono: ")
-    # cliente_nombres[0].append(nombre_cliente)
-    # cliente_nombres[0].append(apellido_cliente)
-    # cliente_nombres[0].append(telefono_cliente)
-    print("         Ingrese los datos de la policrush")
-    nombre_policrush=input(" Nombre: ")
-    dependencia_policrush=input(" Dependencia: ")
-    telefono_policrush=input(" Telefono: ")
-    print("         Seleccion del regalo")
-    print(" +  1) Opcion 1: Poliflor + Polipeluche = $2.50")
-    print(" +  2) Opcion 2: Poliflor + Policarta = $1.50")
-    print(" +  3) Opcion 3: Poliflor + Polillavero = $2.00")
-    print(" +  4) Opcion 4: Poliflor + Polivaso = $2.75")
-    opc=input(" Ingrese la opcion: ")
-    print("--------PERDIDO REGISTRADO CON EXITO------")
-    return int(opc)
-def opcion2(n_pedidos):
+
+def registrar_pedido():
+    if len(clientes) >= 4:
+        print("Máximo de clientes alcanzado.")
+        return
     
-    print("--------DETALLE DE TODOS LOS PEDIDOS----------")
+    print("------------NUEVO PEDIDO------------")
+    print("Ingrese los datos del cliente")
+    nombre_cliente = input("Nombre: ")
+    apellido_cliente = input("Apellido: ")
+    telefono_cliente = input("Teléfono: ")
+    
+    cliente = {
+        'nombre': nombre_cliente,
+        'apellido': apellido_cliente,
+        'telefono': telefono_cliente
+    }
+    clientes.append(cliente)
+    
+    print("Ingrese los datos de la policrush")
+    nombre_policrush = input("Nombre: ")
+    dependencia_policrush = input("Dependencia: ")
+    telefono_policrush = input("Teléfono: ")
+    
+    policrush = {
+        'nombre': nombre_policrush,
+        'dependencia': dependencia_policrush,
+        'telefono': telefono_policrush
+    }
+    plicrushes.append(policrush)
+    
+    print("Seleccion del regalo")
+    print("1) Poliflor + Polipeluche = $2.50")
+    print("2) Poliflor + Policarta = $1.50")
+    print("3) Poliflor + Polillavero = $2.00")
+    print("4) Poliflor + Polivaso = $2.75")
+    opc = int(input("Ingrese la opción: "))
+    
+    if opc == 1:
+        precio = 2.50
+    elif opc == 2:
+        precio = 1.50
+    elif opc == 3:
+        precio = 2.00
+    elif opc == 4:
+        precio = 2.75
+    else:
+        print("Opción no válida")
+        return
+    
+    codigo_pedido = len(pedidos) + 1
+    pedido = {
+        'codigo': codigo_pedido,
+        'cliente': cliente,
+        'policrush': policrush,
+        'precio': precio
+    }
+    pedidos.append(pedido)
+    
+    print("--------PEDIDO REGISTRADO CON ÉXITO--------")
+
+def mostrar_pedidos():
+    print("--------DETALLE DE TODOS LOS PEDIDOS--------")
+    if len(pedidos) > 0:
+        for pedido in pedidos:
+            print(f"Detalle del pedido {pedido['codigo']}")
+            print("Datos del Cliente")
+            print(f"    + Nombre: {pedido['cliente']['nombre']}")
+            print(f"    + Apellido: {pedido['cliente']['apellido']}")
+            print(f"    + Teléfono: {pedido['cliente']['telefono']}")
+            print("Datos de la entrega")
+            print(f"    + Nombre: {pedido['policrush']['nombre']}")
+            print(f"    + Dependencia: {pedido['policrush']['dependencia']}")
+            print(f"    + Teléfono: {pedido['policrush']['telefono']}")
+            print("Datos del pago")
+            print(f"    + Código del pedido: {pedido['codigo']}")
+            print(f"    + Pago final: {pedido['precio']}")
+            print("------------------------------")
+    else:
+        print("No existen pedidos registrados")
     print("------------------------------")
-    if n_pedidos>0:
-        for i in range(n_pedidos):
-            print(f" Detalle del pedido {i+1}")
-            print("\n Datos del Cliente")
-            print(f"         + Nombre: {cliente_nombres[i+1]}")
-            print(f"         + Apellido: {cliente_apellido[i+1]}")
-            print(f"         + Telefono: {cliente_telefono[i+1]}")
-            print("\n Datos de la entrega")
-            print(f"         + Nombre: {plicrush_nombre[i+1]}")
-            print(f"         + Dependencia: {plicrush_dependencia[i+1]}")
-            print(f"         + Telefono: {plicrush_telefono[i+1]}")
-            print("\n Datos del pago ")
-            print(f"         + Codigo del pedido: {codigo[i+1]} ")
-            print(f"         + Pago final: {pago_final[i+1]} ")
-    elif n_pedidos<= 0: 
-        print(" No Existen Pedidos Registrados")
-    print("------------------------------")
-def opcion3():
-    ingreso_codigo=input(" Ingrese el codigo del pedido: ")
-    if (ingreso_codigo in codigo):
+
+def mostrar_detalle_pedido():
+    ingreso_codigo = int(input("Ingrese el código del pedido: "))
+    pedido_encontrado = next((pedido for pedido in pedidos if pedido['codigo'] == ingreso_codigo), None)
+    
+    if pedido_encontrado:
         print("Pedido encontrado")
         print("--------------------------")
         print("Detalle")
-        print("\n Datos del Cliente")
-        print(f"         + Nombre: {cliente_nombres[i+1]}")
-        print(f"         + Apellido: {cliente_apellido[i+1]}")
-        print(f"         + Telefono: {cliente_telefono[i+1]}")
-        print("\n Datos de la entrega")
-        print(f"         + Nombre: {plicrush_nombre[i+1]}")
-        print(f"         + Dependencia: {plicrush_dependencia[i+1]}")
-        print(f"         + Telefono: {plicrush_telefono[i+1]}")
-        print("\n Datos del pago ")
-        print(f"         + Codigo del pedido: {codigo[i+1]} ")
-        print(f"         + Pago final: {pago_final[i+1]} ")
-    elif(ingreso_codigo!= codigo):
+        print("Datos del Cliente")
+        print(f"    + Nombre: {pedido_encontrado['cliente']['nombre']}")
+        print(f"    + Apellido: {pedido_encontrado['cliente']['apellido']}")
+        print(f"    + Teléfono: {pedido_encontrado['cliente']['telefono']}")
+        print("Datos de la entrega")
+        print(f"    + Nombre: {pedido_encontrado['policrush']['nombre']}")
+        print(f"    + Dependencia: {pedido_encontrado['policrush']['dependencia']}")
+        print(f"    + Teléfono: {pedido_encontrado['policrush']['telefono']}")
+        print("Datos del pago")
+        print(f"    + Código del pedido: {pedido_encontrado['codigo']}")
+        print(f"    + Pago final: {pedido_encontrado['precio']}")
+    else:
         print("+++++++++ERROR+++++++++++")
-        print("No existe ese codigo de pedido registrado")
+        print("No existe ese código de pedido registrado")
+
 def main():
     print("----------MI POLICRUSH-----------")
     print("     +++Bienvenido(a)+++")
-    men=menu()
-    opcion=0
+    opcion = 0
     while opcion != 4:
-        opcion = MENU()
+        opcion = menu()
         if opcion == 1:
-            opcion1()
+            registrar_pedido()
         elif opcion == 2:
-            opcion2()
+            mostrar_pedidos()
         elif opcion == 3:
-            opcion3
-        elif opcion ==4:
-            print(" Gracias por su atencion \n lindo dia....")
+            mostrar_detalle_pedido()
+        elif opcion == 4:
+            print("Gracias por su atención. Lindo día....")
         else:
-            print("Opcion no valida")
+            print("Opción no válida")
+
 main()
-
-
-
-
-
+        
